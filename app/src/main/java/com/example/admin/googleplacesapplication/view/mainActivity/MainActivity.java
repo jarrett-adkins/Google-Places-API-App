@@ -20,9 +20,11 @@ import com.example.admin.googleplacesapplication.R;
 import com.example.admin.googleplacesapplication.di.mainActivity.DaggerMainActivityComponent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     protected GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleApiClient mGoogleApiClient;
 
 
@@ -67,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         initGooglePlaces();
         initRecyclerView();
         presenter.addView(this);
-//        presenter.getPlaces();
     }
 
     private void initDaggerComponent() {
@@ -87,27 +89,28 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     private void initGooglePlaces() {
-        // Construct a GeoDataClient.
-        mGeoDataClient = Places.getGeoDataClient(this, null);
-
-        // Construct a PlaceDetectionClient.
-        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+//        // Construct a GeoDataClient.
+//        mGeoDataClient = Places.getGeoDataClient(this, null);
+//
+//        // Construct a PlaceDetectionClient.
+//        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+//
+//        // Construct a FusedLocationProviderClient.
+//        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // create an instance of the Google Play services API client.
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Log.d(TAG, "onConnectionFailed: " + connectionResult.getErrorMessage());
-                        showError( connectionResult.getErrorMessage() );
-                    }
-                })
-                .build();
-
-        mGoogleApiClient.getA
+//        mGoogleApiClient = new GoogleApiClient
+//                .Builder(this)
+//                .addApi(Places.GEO_DATA_API)
+//                .addApi(Places.PLACE_DETECTION_API)
+//                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+//                    @Override
+//                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//                        Log.d(TAG, "onConnectionFailed: " + connectionResult.getErrorMessage());
+//                        showError( connectionResult.getErrorMessage() );
+//                    }
+//                })
+//                .build();
     }
 
     private void initRecyclerView() {
@@ -135,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
         // will be called after the user searches with the search view.
         Log.d(TAG, "onNewIntent: ");
+
+        presenter.getPlaces();
     }
 
     @Override
@@ -173,8 +178,12 @@ X 1. use Google Places API
 9. animate each item entry in the recycler view.
 X -Use MVP
 X -Dagger
--Use Google Places API with REST calls rather than the SDK
+X -Use Google Places API with REST calls rather than the SDK
 Bonus points:
 -to use ItemTouchHelper class in recyclerView
 -use an interface to handle on click events in the adapter
+
+https://developers.google.com/places/web-service/search
+https://developers.google.com/places/android-api/current-place
+https://developers.google.com/places/android-api/current-place-tutorial
  */

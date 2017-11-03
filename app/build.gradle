@@ -16,6 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField( "String", "API_KEY", apiKey )
+    }
 }
 
 dependencies {
@@ -42,6 +45,9 @@ dependencies {
 
     // google places
     compile 'com.google.android.gms:play-services-places:11.4.2'
+
+    // google play services
+    compile 'com.google.android.gms:play-services:11.4.2'
 
     // recycler view
     compile 'com.android.support:recyclerview-v7:26.1.0'
